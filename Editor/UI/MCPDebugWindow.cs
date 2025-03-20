@@ -50,6 +50,16 @@ namespace Plugins.GamePilot.Editor.MCP
             wnd.minSize = new Vector2(400, 500);
         }
 
+        /// <summary>
+        /// Initializes the debug window UI by loading visual assets, configuring UI elements, and binding event callbacks.
+        /// </summary>
+        /// <remarks>
+        /// This method clones the UXML layout into the window's root element and applies styling from the USS asset.
+        /// It queries essential UI components such as connection status labels, buttons, toggles, and text fields, and sets 
+        /// a default server port value ("5010") if the port field is empty. Additionally, it binds events for connection, 
+        /// disconnection, and auto-reconnect functionalities, sets up logging toggles, updates the UI to reflect the current state,
+        /// and registers an editor update callback. If either the UXML or USS asset is missing, an error is logged for debugging purposes.
+        /// </remarks>
         public void CreateGUI()
         {
             VisualElement root = rootVisualElement;
@@ -106,6 +116,13 @@ namespace Plugins.GamePilot.Editor.MCP
             EditorApplication.update += OnEditorUpdate;
         }
         
+        /// <summary>
+        /// Creates a fallback user interface for the MCP Debug Window when the UXML layout is unavailable.
+        /// </summary>
+        /// <remarks>
+        /// This method builds a basic UI on the provided root element that includes a notification label about the missing UXML, a text field for entering the server port (default value "5010"), buttons to initiate connection and disconnection, a toggle for auto-reconnect functionality, and a label to display connection status.
+        /// </remarks>
+        /// <param name="root">The container to which the fallback UI elements are added.</param>
         private void CreateFallbackUI(VisualElement root)
         {
             // Create a simple fallback UI if UXML fails to load
@@ -232,6 +249,16 @@ namespace Plugins.GamePilot.Editor.MCP
             MCPLogger.SetComponentLoggingEnabled(componentName, enabled);
         }
         
+        /// <summary>
+        /// Initiates a connection attempt when the connect button is clicked.
+        /// </summary>
+        /// <remarks>
+        /// Retrieves and validates the server port from the input field, defaulting to "5010" if empty,
+        /// and constructs a WebSocket URI using localhost and the specified port. If a MCPConnectionManager
+        /// instance is found, its internal server URI is updated via reflection. Depending on the MCPManager’s
+        /// initialization state, the method either retries an existing connection or initializes a new connection,
+        /// updating the UI state accordingly. Displays a dialog for invalid port input or connection errors.
+        /// </remarks>
         private void OnConnectClicked()
         {
             // Always use localhost for the WebSocket URL

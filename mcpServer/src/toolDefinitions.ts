@@ -64,6 +64,18 @@ export const ListScriptsArgsSchema = z.object({
   path: z.string().optional().default("Scripts").describe('Path to look for scripts in. Can be absolute or relative to Unity project Assets folder. If empty, defaults to the Assets/Scripts folder.'),
 });
 
+/**
+ * Registers request handlers for Unity Editor and filesystem tools on the server.
+ *
+ * This function sets up two primary request handlers:
+ * - One for listing all available tools, providing detailed schema definitions and metadata for each tool.
+ * - One for processing tool execution calls by dispatching requests based on the tool name. Filesystem operations are routed through a dedicated handler,
+ *   while Unity-specific commands first verify an active WebSocket connection.
+ *
+ * The Unity project root path is determined from the UNITY_PROJECT_PATH environment variable or defaults to the current working directory.
+ *
+ * @throws {McpError} If a Unity-specific tool is executed without an active connection.
+ */
 export function registerTools(server: Server, wsHandler: WebSocketHandler) {
   // Determine project root path from environment variable or default to parent of Assets folder
   const projectPath = process.env.UNITY_PROJECT_PATH || path.resolve(process.cwd());

@@ -47,6 +47,19 @@ export const FindAssetsByTypeArgsSchema = z.object({
 export const ListScriptsArgsSchema = z.object({
     path: z.string().optional().default("Scripts").describe('Path to look for scripts in. Can be absolute or relative to Unity project Assets folder. If empty, defaults to the Assets/Scripts folder.'),
 });
+/**
+ * Registers available Unity Editor and filesystem tools with the MCP server and configures tool request handling.
+ *
+ * This function determines the project root from the UNITY_PROJECT_PATH environment variable (or defaults
+ * to the current working directory) and registers a set of tools—each defined with its name, description,
+ * category, tags, and input schema—for both Unity Editor operations and filesystem interactions.
+ * It also sets up a request handler that routes tool invocation requests based on the tool name,
+ * handling special cases such as connection verification, filesystem operations (via a dedicated handler),
+ * and Unity-specific commands. If the Unity Editor is not connected when required, it throws an McpError.
+ *
+ * @remark Tools like "verify_connection" are processed even if the Unity Editor is not connected, while other
+ * Unity-specific tools require an active connection and perform additional error handling.
+ */
 export function registerTools(server, wsHandler) {
     // Determine project root path from environment variable or default to parent of Assets folder
     const projectPath = process.env.UNITY_PROJECT_PATH || path.resolve(process.cwd());
