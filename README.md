@@ -1,7 +1,7 @@
 # 🚀 Advacned Unity MCP Integration 
 
 [![MCP](https://badge.mcpx.dev)](https://modelcontextprotocol.io/introduction)
-[![smithery badge](https://smithery.ai/badge/@quazaai/unitymcpintegration)](https://smithery.ai/server/@quazaai/unitymcpintegration)
+[![Listed on LightNow](https://lightnow.ai/badge/io.github.quazaai/unitymcpintegration?variant=listed)](https://lightnow.ai/servers/io.github.quazaai/unitymcpintegration)
 [![Unity](https://img.shields.io/badge/Unity-2021.3%2B-green?logo=https://w7.pngwing.com/pngs/426/535/png-transparent-unity-new-logo-tech-companies-thumbnail.png)](https://unity.com)
 [![Node.js](https://img.shields.io/badge/Node.js-18%2B-green)](https://nodejs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue)](https://www.typescriptlang.org)
